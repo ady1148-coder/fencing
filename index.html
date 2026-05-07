@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>J&K Fencing Association — Fencer Verification</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --navy:       #0b1e45;
+  --navy-mid:   #1a3a8f;
+  --blue:       #1d4ed8;
+  --blue-lt:    #2563eb;
+  --gold:       #c9a84c;
+  --gold-lt:    #f0d080;
+  --green:      #166534;
+  --green-mid:  #15803d;
+  --green-bg:   #dcfce7;
+  --green-bd:   #86efac;
+  --green-text: #14532d;
+  --amber:      #92400e;
+  --amber-mid:  #b45309;
+  --amber-bg:   #fef3c7;
+  --amber-bd:   #fcd34d;
+  --amber-text: #78350f;
+  --red:        #991b1b;
+  --red-mid:    #b91c1c;
+  --red-bg:     #fee2e2;
+  --red-bd:     #fca5a5;
+  --red-text:   #7f1d1d;
+  --white:      #ffffff;
+  --gray-50:    #f8fafc;
+  --gray-100:   #f1f5f9;
+  --gray-200:   #e2e8f0;
+  --gray-400:   #94a3b8;
+  --gray-500:   #64748b;
+  --gray-700:   #334155;
+  --gray-800:   #1e293b;
+  --font-head:  'Cinzel', serif;
+  --font-body:  'DM Sans', sans-serif;
+}
+
+html, body {
+  min-height: 100vh;
+  font-family: var(--font-body);
+  background: var(--navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 16px;
+  overflow-x: hidden;
+}
+body::before {
+  content: ''; position: fixed; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 15%  8%,  rgba(37,99,235,.38)  0%, transparent 58%),
+    radial-gradient(ellipse 60% 80% at 88% 92%, rgba(201,168,76,.16) 0%, transparent 52%),
+    radial-gradient(ellipse 55% 50% at 65% 35%, rgba(29,78,216,.16)  0%, transparent 58%);
+  pointer-events: none; z-index: 0;
+}
+body::after {
+  content: ''; position: fixed; inset: 0;
+  background: repeating-linear-gradient(-52deg, transparent, transparent 22px,
+    rgba(255,255,255,.018) 22px, rgba(255,255,255,.018) 23px);
+  pointer-events: none; z-index: 0;
+}
+
+/* LOADING */
+#loading {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; align-items: center; gap: 22px;
+}
+.spinner {
+  width: 56px; height: 56px;
+  border: 4px solid rgba(255,255,255,.12);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-text {
+  font-family: var(--font-head);
+  font-size: 13px; letter-spacing: 3.5px; text-transform: uppercase;
+  color: var(--gold-lt);
+  animation: pulse 1.8s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:.55} 50%{opacity:1} }
+
+/* CARD WRAPPER */
+.card-wrap {
+  position: relative; z-index: 1;
+  width: 100%; max-width: 580px;
+  animation: rise .6s cubic-bezier(.22,.68,0,1.2) both;
+}
+@keyframes rise {
+  from { opacity:0; transform: translateY(36px) scale(.96); }
+  to   { opacity:1; transform: translateY(0) scale(1); }
+}
+
+/* CARD */
+.card {
+  background: var(--white);
+  border-radius: 26px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0,0,0,.07), 0 24px 64px rgba(0,0,0,.38), 0 0 0 1px rgba(255,255,255,.06);
+}
+
+/* CARD HEADER */
+.card-header {
+  background: linear-gradient(150deg, var(--navy) 0%, var(--navy-mid) 52%, var(--blue-lt) 100%);
+  padding: 42px 32px 36px; text-align: center; position: relative; overflow: hidden;
+}
+.card-header::before {
+  content: ''; position: absolute; inset: -60px;
+  background: repeating-linear-gradient(-52deg, transparent, transparent 18px,
+    rgba(255,255,255,.028) 18px, rgba(255,255,255,.028) 19px);
+}
+.card-header::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, transparent, var(--gold), var(--gold-lt), var(--gold), transparent);
+}
+.logo-ring {
+  position: relative; z-index: 1;
+  width: 92px; height: 92px; margin: 0 auto 22px;
+  border-radius: 50%; padding: 4px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-lt));
+  box-shadow: 0 0 0 4px rgba(201,168,76,.22), 0 10px 28px rgba(0,0,0,.42);
+  animation: float 4s ease-in-out infinite;
+}
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)} }
+.logo-ring img { width:100%; height:100%; border-radius:50%; object-fit:cover; display:block; }
+.header-title {
+  position: relative; z-index: 1;
+  font-family: var(--font-head); font-size: 22px; font-weight: 900;
+  color: var(--white); letter-spacing: .8px; line-height: 1.3;
+  text-shadow: 0 2px 14px rgba(0,0,0,.4); margin-bottom: 8px;
+}
+.header-sub {
+  position: relative; z-index: 1;
+  font-size: 11px; font-weight: 500; letter-spacing: 3.5px;
+  text-transform: uppercase; color: var(--gold-lt); opacity: .9;
+}
+
+/* CARD BODY */
+.card-body { padding: 42px 36px 40px; text-align: center; }
+
+/* FENCER PHOTO */
+.fencer-photo-ring {
+  width: 110px; height: 110px; border-radius: 50%; padding: 3px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-lt));
+  margin: 0 auto 20px; box-shadow: 0 6px 24px rgba(0,0,0,.18);
+  display: none;
+}
+.fencer-photo-ring.show { display: block; }
+.fencer-photo-ring img { width:100%; height:100%; border-radius:50%; object-fit:cover; display:block; background:var(--gray-200); }
+
+/* STATUS BADGE */
+.badge {
+  width: 96px; height: 96px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 40px; margin: 0 auto 26px; position: relative;
+}
+.badge::before {
+  content: ''; position: absolute; inset: -7px; border-radius: 50%; opacity: .3;
+  animation: ring-pulse 2.4s ease-in-out infinite;
+}
+@keyframes ring-pulse { 0%,100%{transform:scale(1);opacity:.3} 50%{transform:scale(1.14);opacity:.07} }
+.badge.verified { background: var(--green-bg); border: 3px solid var(--green-bd); }
+.badge.pending  { background: var(--amber-bg); border: 3px solid var(--amber-bd); }
+.badge.rejected { background: var(--red-bg);   border: 3px solid var(--red-bd);   }
+.badge.verified::before { background: var(--green-bd); }
+.badge.pending::before  { background: var(--amber-bd); }
+.badge.rejected::before { background: var(--red-bd);   }
+
+.fencer-name {
+  font-family: var(--font-head); font-size: 26px; font-weight: 700;
+  color: var(--gray-800); letter-spacing: .4px; margin-bottom: 6px; line-height: 1.3;
+}
+.headline { font-size: 16px; font-weight: 600; line-height: 1.55; margin-bottom: 16px; }
+.headline.verified { color: var(--green-mid); }
+.headline.pending  { color: var(--amber-mid); }
+.headline.rejected { color: var(--red-mid);   }
+.message { font-size: 14px; color: var(--gray-500); line-height: 1.8; max-width: 420px; margin: 0 auto 28px; }
+
+/* STATUS BOX */
+.status-box { border-radius: 16px; padding: 20px 24px; margin-bottom: 24px; }
+.status-box.verified { background: var(--green-bg); border: 1.5px solid var(--green-bd); }
+.status-box.pending  { background: var(--amber-bg); border: 1.5px solid var(--amber-bd); }
+.status-box.rejected { background: var(--red-bg);   border: 1.5px solid var(--red-bd);   }
+.status-label { font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 6px; }
+.status-box.verified .status-label { color: var(--green); }
+.status-box.pending  .status-label { color: var(--amber); }
+.status-box.rejected .status-label { color: var(--red);   }
+.status-value { font-family: var(--font-head); font-size: 17px; font-weight: 700; color: var(--gray-800); }
+
+/* DUAL STATUS PILLS */
+.dual-status { display: flex; gap: 10px; margin-bottom: 24px; }
+.status-pill { flex: 1; border-radius: 12px; padding: 12px 14px; text-align: center; }
+.status-pill-label { font-size: 9px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; opacity: .7; }
+.status-pill-value { font-size: 13px; font-weight: 700; }
+.status-pill.approved { background: var(--green-bg); border: 1.5px solid var(--green-bd); color: var(--green-text); }
+.status-pill.pending  { background: var(--amber-bg); border: 1.5px solid var(--amber-bd); color: var(--amber-text); }
+.status-pill.rejected { background: var(--red-bg);   border: 1.5px solid var(--red-bd);   color: var(--red-text);   }
+
+/* DETAILS TABLE */
+.details-table {
+  background: var(--gray-50); border: 1px solid var(--gray-200);
+  border-radius: 16px; overflow: hidden; margin-bottom: 24px; text-align: left;
+}
+.detail-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 13px 20px; border-bottom: 1px solid var(--gray-100); gap: 12px;
+}
+.detail-row:last-child { border-bottom: none; }
+.detail-label { font-size: 11px; font-weight: 600; letter-spacing: 1.8px; text-transform: uppercase; color: var(--gray-400); flex-shrink: 0; }
+.detail-value { font-size: 14px; font-weight: 600; color: var(--gray-700); text-align: right; }
+
+.divider { height: 1px; background: linear-gradient(90deg, transparent, var(--gray-200), transparent); margin: 0 0 20px; }
+.meta { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 12px; color: var(--gray-400); letter-spacing: .4px; flex-wrap: wrap; }
+.meta-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--gray-400); opacity: .5; }
+
+/* DEBUG BOX */
+.debug-box {
+  position: relative; z-index: 1;
+  background: rgba(255,255,255,.06); backdrop-filter: blur(18px);
+  border: 1px solid rgba(255,255,255,.15); border-radius: 20px;
+  padding: 36px 28px; max-width: 560px; width: 100%; text-align: center;
+  color: var(--white); animation: rise .5s ease both;
+}
+.debug-title { font-family: var(--font-head); font-size: 18px; color: #fcd34d; margin-bottom: 14px; }
+.debug-url {
+  font-family: monospace; font-size: 11px; background: rgba(0,0,0,.35);
+  border: 1px solid rgba(255,255,255,.1); border-radius: 8px;
+  padding: 10px 14px; color: #86efac; word-break: break-all;
+  margin: 10px 0; text-align: left;
+}
+.debug-msg { font-size: 13px; color: rgba(255,255,255,.65); line-height: 1.85; }
+
+/* ERROR PAGE */
+.error-wrap {
+  position: relative; z-index: 1; width: 100%; max-width: 460px;
+  background: rgba(255,255,255,.06); backdrop-filter: blur(18px);
+  border: 1px solid rgba(255,255,255,.1); border-radius: 24px;
+  padding: 52px 36px; text-align: center; color: var(--white); animation: rise .5s ease both;
+}
+.error-icon { font-size: 56px; margin-bottom: 22px; display: block; }
+.error-title { font-family: var(--font-head); font-size: 22px; color: #fca5a5; margin-bottom: 14px; }
+.error-msg { font-size: 14px; color: rgba(255,255,255,.6); line-height: 1.8; }
+.error-contact {
+  margin-top: 24px; display: inline-block;
+  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14);
+  color: var(--gold-lt); padding: 10px 24px; border-radius: 50px;
+  font-size: 13px; text-decoration: none; transition: background .2s;
+}
+.error-contact:hover { background: rgba(255,255,255,.14); }
+
+.powered {
+  position: relative; z-index: 1; text-align: center;
+  margin-top: 20px; font-size: 11.5px; color: rgba(255,255,255,.3); letter-spacing: 1px;
+}
+.powered a { color: var(--gold-lt); opacity: .7; text-decoration: none; }
+.powered a:hover { opacity: 1; }
+
+@media (max-width: 480px) {
+  .card-header { padding: 34px 20px 28px; }
+  .card-body   { padding: 28px 18px 28px; }
+  .fencer-name { font-size: 20px; }
+  .header-title { font-size: 18px; }
+  .detail-row { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .detail-value { text-align: left; }
+  .dual-status { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<div id="loading">
+  <div class="spinner"></div>
+  <div class="loading-text">Verifying Fencer</div>
+</div>
+
+<script>
+
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyTX2giuoBySe6eKAg9uan8LLIE3_DAElDPau5SBjzvPYttc29nEYxJXAviQyOPqnNa/exec";
+const LOGO       = "https://assets.zyrosite.com/YrDarQqlgPt9D78a/whatsapp-image-2025-01-22-at-20.33.41-AMql1j2GVRI2nxB4.jpeg";
+
+/* ── HELPERS ── */
+function hideLoading() {
+  const el = document.getElementById("loading");
+  if (el) el.style.display = "none";
+}
+function addPowered() {
+  const p = document.createElement("div");
+  p.className = "powered";
+  p.innerHTML = `<a href="https://jkfencing.org" target="_blank">jkfencing.org</a> &nbsp;·&nbsp; Official Verification Portal`;
+  document.body.appendChild(p);
+}
+function show(html) {
+  hideLoading();
+  const d = document.createElement("div");
+  d.innerHTML = html;
+  document.body.appendChild(d.firstElementChild);
+  addPowered();
+}
+function showError(icon, title, msg) {
+  hideLoading();
+  const w = document.createElement("div");
+  w.className = "error-wrap";
+  w.innerHTML = `<span class="error-icon">${icon}</span>
+    <div class="error-title">${title}</div>
+    <div class="error-msg">${msg}</div>
+    <a class="error-contact" href="https://jkfencing.org" target="_blank">Visit jkfencing.org</a>`;
+  document.body.appendChild(w);
+  addPowered();
+}
+function showDebug() {
+  hideLoading();
+  const w = document.createElement("div");
+  w.className = "debug-box";
+  w.innerHTML = `
+    <div class="debug-title">⚠️ URL Debug Info</div>
+    <div class="debug-msg">The verify page loaded but could not find a Fencer ID in the URL.<br><br>
+    Please send a screenshot of this page to your developer.</div>
+    <div class="debug-url"><strong>Full URL:</strong><br>${location.href}</div>
+    <div class="debug-url">
+      <strong>search:</strong> ${location.search || "(empty)"}<br>
+      <strong>hash:</strong> ${location.hash || "(empty)"}<br>
+      <strong>pathname:</strong> ${location.pathname}
+    </div>
+    <div class="debug-msg" style="margin-top:12px">
+      Try visiting:<br>
+      <span style="color:#86efac;font-family:monospace;font-size:11px;word-break:break-all">
+        ${location.origin}${location.pathname}?id=JKF1778147610714
+      </span>
+    </div>`;
+  document.body.appendChild(w);
+  addPowered();
+}
+function formatDate(raw) {
+  if (!raw) return "—";
+  if (String(raw).match(/^\d{2}-\d{2}-\d{4}$/)) return raw;
+  const d = new Date(raw);
+  if (isNaN(d.getTime())) return String(raw)||"—";
+  return ("0"+d.getDate()).slice(-2)+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-"+d.getFullYear();
+}
+function esc(s) {
+  return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+function pillCls(s) {
+  const v = String(s||"").trim().toLowerCase();
+  return v==="approved"?"approved":v==="rejected"?"rejected":"pending";
+}
+function clean(raw) {
+  try { return decodeURIComponent(raw).trim().replace(/\s+/g,""); }
+  catch(_) { return String(raw).trim().replace(/\s+/g,""); }
+}
+
+/* ── EXTRACT FENCER ID — 6 methods, most robust possible ── */
+function extractId() {
+  const href   = location.href;
+  const search = location.search;
+  const hash   = location.hash;
+  const path   = location.pathname;
+
+  console.log("[JKFA] href=",href,"search=",search,"hash=",hash,"path=",path);
+
+  // 1. Standard ?id=
+  try {
+    const v = new URLSearchParams(search).get("id");
+    if (v && v.trim()) { console.log("[JKFA] method1 ?id=",v); return clean(v); }
+  } catch(_) {}
+
+  // 2. Regex scan of full href for id=VALUE
+  const m1 = href.match(/[?&#]id=([^&# \n\r]+)/i);
+  if (m1) { console.log("[JKFA] method2 regex id=",m1[1]); return clean(m1[1]); }
+
+  // 3. Hash ?id= or #id=
+  if (hash) {
+    try {
+      const v = new URLSearchParams(hash.replace(/^#\??/,"")).get("id");
+      if (v && v.trim()) { console.log("[JKFA] method3 hash id=",v); return clean(v); }
+    } catch(_) {}
+
+    // 4. Bare #JKF... in hash
+    const bareHash = hash.replace(/^#/,"").trim();
+    if (/^JKF\d+$/i.test(bareHash)) { console.log("[JKFA] method4 bare hash",bareHash); return clean(bareHash); }
+  }
+
+  // 5. Path segment /JKF123...
+  for (const seg of path.split("/").filter(Boolean)) {
+    if (/^JKF\d+$/i.test(seg)) { console.log("[JKFA] method5 path seg",seg); return clean(seg); }
+  }
+
+  // 6. JKF anywhere in full URL (last resort)
+  const m2 = href.match(/JKF\d{10,}/i);
+  if (m2) { console.log("[JKFA] method6 full scan",m2[0]); return clean(m2[0]); }
+
+  console.log("[JKFA] No ID found in URL");
+  return "";
+}
+
+/* ── BUILD CARD ── */
+function buildCard(cfg, u) {
+  const photoHTML = (u.photo && u.photo.trim())
+    ? `<div class="fencer-photo-ring show"><img src="${esc(u.photo)}" alt="Photo" onerror="this.parentElement.style.display='none'"></div>`
+    : "";
+
+  const pay = String(u.paymentStatus  || "Pending");
+  const app = String(u.approvalStatus || u.paymentStatus || "Pending");
+
+  const dualHTML = `
+    <div class="dual-status">
+      <div class="status-pill ${pillCls(pay)}">
+        <div class="status-pill-label">Payment Status</div>
+        <div class="status-pill-value">${esc(pay)}</div>
+      </div>
+      <div class="status-pill ${pillCls(app)}">
+        <div class="status-pill-label">Approval Status</div>
+        <div class="status-pill-value">${esc(app)}</div>
+      </div>
+    </div>`;
+
+  const rows = [
+    ["Fencer ID",     esc(u.id)],
+    ["Weapon",        esc(u.weapon)],
+    ["District",      esc(u.district)],
+    ["Date of Birth", formatDate(u.dob)],
+    ["Age Category",  esc(u.age)],
+    ["Gender",        esc(u.gender)],
+  ].filter(([,v]) => v && v !== "—" && v.trim());
+
+  const detailRows = rows.map(([l,v]) =>
+    `<div class="detail-row"><span class="detail-label">${l}</span><span class="detail-value">${v}</span></div>`
+  ).join("");
+
+  return `<div class="card-wrap"><div class="card">
+    <div class="card-header">
+      <div class="logo-ring"><img src="${LOGO}" alt="J&K FA" onerror="this.style.background='#1a3a8f'"></div>
+      <div class="header-title">J&amp;K Fencing Association</div>
+      <div class="header-sub">Official Verification Portal</div>
+    </div>
+    <div class="card-body">
+      ${photoHTML}
+      <div class="badge ${cfg.cls}">${cfg.icon}</div>
+      <div class="fencer-name">${esc(u.name)}</div>
+      <div class="headline ${cfg.cls}">${cfg.headline}</div>
+      <p class="message">${cfg.message}</p>
+      <div class="status-box ${cfg.cls}">
+        <div class="status-label">${cfg.statusLabel}</div>
+        <div class="status-value">${cfg.statusValue}</div>
+      </div>
+      ${dualHTML}
+      ${rows.length ? `<div class="details-table">${detailRows}</div>` : ""}
+      <div class="divider"></div>
+      <div class="meta">
+        <span>Fencer ID</span><span class="meta-dot"></span>
+        <span>${esc(u.id)||"—"}</span><span class="meta-dot"></span>
+        <span>jkfencing.org</span>
+      </div>
+    </div>
+  </div></div>`;
+}
+
+/* ── MAIN ── */
+(async function init() {
+
+  const id = extractId();
+
+  if (!id) {
+    showDebug();
+    return;
+  }
+
+  try {
+    const url = SCRIPT_URL + "?action=verify&id=" + encodeURIComponent(id);
+    console.log("[JKFA] Fetching:", url);
+
+    const res  = await fetch(url, { cache:"no-store" });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const data = await res.json();
+    console.log("[JKFA] Response:", data);
+
+    if (data.status !== "success" || !data.user) {
+      showError("🚫","Fencer Not Found",
+        "No registered fencer was found for ID: <strong style='color:#86efac'>" + esc(id) + "</strong><br><br>" +
+        "Please contact J&amp;K Fencing Association.");
+      return;
+    }
+
+    const u   = data.user;
+    const pay = String(u.paymentStatus  || "").trim().toLowerCase();
+    const app = String(u.approvalStatus || u.paymentStatus || "").trim().toLowerCase();
+
+    const final =
+      (pay === "approved" && app === "approved") ? "approved" :
+      (pay === "rejected" || app === "rejected") ? "rejected" : "pending";
+
+    console.log("[JKFA] pay="+pay+" app="+app+" final="+final);
+
+    if (final === "approved") {
+      show(buildCard({
+        cls:"verified", icon:"✓",
+        headline:"Verified Fencer — J&K Fencing Association",
+        message:"This digital identity belongs to an officially approved and verified fencer " +
+                "registered with J&amp;K Fencing Association. Valid for Season 2026–27.",
+        statusLabel:"Card Validity Period",
+        statusValue:"01 Apr 2026 — 31 Mar 2027",
+      }, u));
+      return;
+    }
+
+    if (final === "pending") {
+      show(buildCard({
+        cls:"pending", icon:"!",
+        headline:"Registration Pending",
+        message:"This fencer is registered with J&amp;K Fencing Association but their " +
+                "payment or approval is currently pending. The ID card is temporarily inactive.",
+        statusLabel:"Card Status",
+        statusValue:"Temporarily Inactive",
+      }, u));
+      return;
+    }
+
+    show(buildCard({
+      cls:"rejected", icon:"✕",
+      headline:"Card Expired or Rejected",
+      message:"This identity card is no longer valid. Please contact the association office.",
+      statusLabel:"Card Status",
+      statusValue:"Invalid / Expired",
+    }, u));
+
+  } catch(err) {
+    console.error("[JKFA] Error:", err);
+    showError("⚠️","Verification Unavailable",
+      "Could not reach the verification server.<br><br>" +
+      "Please check your internet connection and try again.");
+  }
+})();
+
+</script>
+</body>
+</html>
